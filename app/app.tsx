@@ -19,6 +19,7 @@ import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { RootStore, RootStoreProvider, setupRootStore } from "./models"
 import { ToggleStorybook } from "../storybook/toggle-storybook"
 import { ErrorBoundary } from "./screens/error/error-boundary"
+import AnimatedSplash from "react-native-animated-splash-screen"
 
 // This puts screens in a native ViewController or Activity. If you want fully native
 // stack navigation, use `createNativeStackNavigator` in place of `createStackNavigator`:
@@ -51,7 +52,7 @@ function App() {
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
-  if (!rootStore || !isNavigationStateRestored) return null
+  // if (!rootStore || !isNavigationStateRestored) return null
 
   // otherwise, we're ready to render the app
   return (
@@ -59,10 +60,19 @@ function App() {
       <RootStoreProvider value={rootStore}>
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
           <ErrorBoundary catchErrors={"always"}>
-            <AppNavigator
-              initialState={initialNavigationState}
-              onStateChange={onNavigationStateChange}
-            />
+            <AnimatedSplash
+              translucent={true}
+              isLoaded={rootStore && isNavigationStateRestored}
+              logoImage={require("../assets/images/app-icon-android-adaptive-foreground.png")}
+              backgroundColor={"#262626"}
+              logoHeight={150}
+              logoWidth={150}
+            >
+              <AppNavigator
+                initialState={initialNavigationState}
+                onStateChange={onNavigationStateChange}
+              />
+            </AnimatedSplash>
           </ErrorBoundary>
         </SafeAreaProvider>
       </RootStoreProvider>

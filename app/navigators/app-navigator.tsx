@@ -8,8 +8,10 @@ import React from "react"
 import { useColorScheme } from "react-native"
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens"
+import { DemoScreen, DemoListScreen, DemoBlurScreen, WelcomeScreen } from "../screens"
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { FloatingTabBar } from "../components"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -24,14 +26,14 @@ import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
 export type NavigatorParamList = {
-  welcome: undefined
-  demo: undefined
-  demoList: undefined
+  rootTab: undefined
+  demoBlur: undefined
   // 🔥 Your screens go here
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<NavigatorParamList>()
+const Tab = createBottomTabNavigator()
 
 const AppStack = () => {
   return (
@@ -39,13 +41,27 @@ const AppStack = () => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="welcome"
+      initialRouteName="rootTab"
     >
-      <Stack.Screen name="welcome" component={WelcomeScreen} />
-      <Stack.Screen name="demo" component={DemoScreen} />
-      <Stack.Screen name="demoList" component={DemoListScreen} />
-      {/** 🔥 Your screens go here */}
+      <Stack.Screen name="rootTab" component={RootTab} />
+      <Stack.Screen name="demoBlur" component={DemoBlurScreen} options={{
+        headerShown: false,
+        presentation: "modal"
+      }} />
     </Stack.Navigator>
+  )
+}
+
+const RootTab = () => {
+  return (
+    <Tab.Navigator screenOptions={{
+      headerShown: false,
+    }} tabBar={(props) => <FloatingTabBar {...props} />}>
+      <Tab.Screen name="a" component={WelcomeScreen} />
+      <Tab.Screen name="b" component={DemoScreen} />
+      <Tab.Screen name="c" component={DemoListScreen} />
+      <Tab.Screen name="d" component={DemoBlurScreen} />
+    </Tab.Navigator>
   )
 }
 

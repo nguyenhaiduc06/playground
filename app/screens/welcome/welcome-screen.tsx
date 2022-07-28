@@ -9,6 +9,7 @@ import {
   Text,
   GradientBackground,
   AutoImage as Image,
+  GradientSwipe,
 } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
@@ -95,6 +96,7 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
           <Header headerTx="welcomeScreen.poweredBy" style={HEADER} titleStyle={HEADER_TITLE} />
+          <GradientSwipe />
           <Text style={TITLE_WRAPPER}>
             <Text style={TITLE} text="Your new app, " />
             <Text style={ALMOST} text="almost" />
