@@ -20,6 +20,7 @@ import { RootStore, RootStoreProvider, setupRootStore } from "./models"
 import { ToggleStorybook } from "../storybook/toggle-storybook"
 import { ErrorBoundary } from "./screens/error/error-boundary"
 import AnimatedSplash from "react-native-animated-splash-screen"
+import Loader from "./components/mask-loader/mask-loader.js";
 
 // This puts screens in a native ViewController or Activity. If you want fully native
 // stack navigation, use `createNativeStackNavigator` in place of `createStackNavigator`:
@@ -60,7 +61,17 @@ function App() {
       <RootStoreProvider value={rootStore}>
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
           <ErrorBoundary catchErrors={"always"}>
-            <AnimatedSplash
+            <Loader
+              isLoaded={rootStore && isNavigationStateRestored}
+              imageSource={require("../assets/images/logo.png")}
+              backgroundStyle={{backgroundColor: "#141414"}}
+            >
+              <AppNavigator
+                initialState={initialNavigationState}
+                onStateChange={onNavigationStateChange}
+              />
+            </Loader>
+            {/* <AnimatedSplash
               translucent={true}
               isLoaded={rootStore && isNavigationStateRestored}
               logoImage={require("../assets/images/app-icon-android-adaptive-foreground.png")}
@@ -72,7 +83,7 @@ function App() {
                 initialState={initialNavigationState}
                 onStateChange={onNavigationStateChange}
               />
-            </AnimatedSplash>
+            </AnimatedSplash> */}
           </ErrorBoundary>
         </SafeAreaProvider>
       </RootStoreProvider>

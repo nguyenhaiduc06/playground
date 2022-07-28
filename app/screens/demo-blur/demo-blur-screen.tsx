@@ -22,7 +22,7 @@ const IMAGE: ImageStyle = {
   borderRadius: 8,
 }
 const OVERLAY: ViewStyle = {
-  backgroundColor: "rgba(0, 0, 0, 0.45)",
+  backgroundColor: "rgba(0, 0, 0, 0.3)",
 }
 const BLUR: ViewStyle = {
   flex: 1,
@@ -55,7 +55,7 @@ export const DemoBlurScreen: FC<StackScreenProps<NavigatorParamList, "demoBlur">
     return (
       <View style={ROOT}>
         <Image style={StyleSheet.absoluteFill} source={{ uri }} />
-        {/* <View style={[StyleSheet.absoluteFill, OVERLAY]}></View> */}
+        <View style={[StyleSheet.absoluteFill, OVERLAY]}></View>
         <BlurView intensity={100} style={BLUR}>
           <Image style={IMAGE} source={{ uri }} />
         </BlurView>
